@@ -2,6 +2,7 @@
 #include <iostream>
 
 
+// Super lousy char to hex converter...
 uint8_t c2hex(char c) {
     if (c == 'f' || c == 'F')
         return 15;
@@ -41,7 +42,7 @@ uint8_t c2hex(char c) {
 }
 
 
-
+// This is the bytecode for the Nindendo logo (I don't wish to remove this array at the moment)
 static const uint8_t data[48] = {
     0x00, 0x00, 0x00, 0x00, 0x66, 0x77, 0x11, 0xFF, 0x88, 0x8B, 0x00, 0x01,
     0x33, 0x3B, 0x07, 0x06, 0x0F, 0x03, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
@@ -67,15 +68,16 @@ int main()
 
 	for(int i=0; i<96; i++)
 		rawHex[i] = fgetc(fp);
-	
+
+	// Analysis of the hex string from the .txt file
 	std::cout << "The hex code to be decoded: ";
 	for(int i=0; i<48; i++) {
 		finHex[i] = c2hex(rawHex[2*i])*16+c2hex(rawHex[2*i+1]);
 		std::printf("%02X ",finHex[i]);
 	}
-
 	std::cout << std::endl << std::endl << "After decoding..." << std::endl << std::endl;
-
+	
+	// The fun part happens here
 	for(int y=0; y<8; ++y) {
 	    int i = ((y/2)%2)+(y/4)*24;
 	    for(int x=0; x<12; ++x,i+=2)
